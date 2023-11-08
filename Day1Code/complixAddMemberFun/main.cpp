@@ -40,7 +40,7 @@ int main() {
 
     Complex c1(real1, imag1);
     Complex c2(real2, imag2);
-    Complex sum = c1.addMember(c2); // Using the addMember member function
+    Complex sum = c1.addMember(c2); 
 
     cout << "c1 = ";
     c1.print();
