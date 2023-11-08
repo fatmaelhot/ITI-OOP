@@ -1,4 +1,4 @@
- #include <iostream>
+#include <iostream>
 using namespace std;
 
 class Complex {
@@ -8,24 +8,22 @@ public:
     Complex() : real(0), imag(0) {}
 
     Complex(int r, int i) : real(r), imag(i) {}
-};
 
-// Stand-alone function to add two Complex objects
-Complex* addComplex(const Complex& c1, const Complex& c2) {
-    Complex* result = new Complex;
-    result->real = c1.real + c2.real;
-    result->imag = c1.imag + c2.imag;
-    return result;
-}
-
-// Stand-alone function to print a Complex object
-void printComplex(const Complex& c) {
-    if (c.imag >= 0) {
-        cout << c.real << " + " << c.imag << "i";
-    } else {
-        cout << c.real << " - " << -c.imag << "i";
+    Complex addMember(const Complex& other) {
+        Complex result;
+        result.real = this->real + other.real;
+        result.imag = this->imag + other.imag;
+        return result;
     }
-}
+
+    void print() {
+        if (imag >= 0) {
+            cout << real << " + " << imag << "i";
+        } else {
+            cout << real << " - " << -imag << "i";
+        }
+    }
+};
 
 int main() {
     int real1, imag1, real2, imag2;
@@ -40,28 +38,23 @@ int main() {
     cout << "Enter imaginary part of the second complex number: ";
     cin >> imag2;
 
-    Complex* c1 = new Complex(real1, imag1);
-    Complex* c2 = new Complex(real2, imag2);
-
-    Complex* sum = addComplex(*c1, *c2);
+    Complex c1(real1, imag1);
+    Complex c2(real2, imag2);
+    Complex sum = c1.addMember(c2); // Using the addMember member function
 
     cout << "c1 = ";
-    printComplex(*c1);
+    c1.print();
     cout << endl;
 
     cout << "c2 = ";
-    printComplex(*c2);
+    c2.print();
     cout << endl;
 
     cout << "Sum of c1 and c2 = ";
-    printComplex(*sum);
+    sum.print();
     cout << endl;
-
-    // to release the dynamically allocated memory
-    delete c1;
-    delete c2;
-    delete sum;
 
     return 0;
 }
+
 
