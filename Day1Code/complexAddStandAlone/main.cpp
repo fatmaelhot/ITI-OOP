@@ -2,7 +2,7 @@
 using namespace std;
 
 class Complex {
-public:
+
     int real, imag;
 
     Complex() : real(0), imag(0) {}

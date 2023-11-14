@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1699958283 source:e:\iti open source\oop c++\day 5\line&circle\main.cpp
+	<iostream>
+	<cmath>
+	<vector>
+	<graphics.h>
+
