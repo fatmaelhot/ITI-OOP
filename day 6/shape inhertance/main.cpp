@@ -13,22 +13,6 @@ public:
         cout << "Drawing a shape" << endl;
     }
 
-    void setPoint1(double x) {
-        point1 = x;
-    }
-
-    double getPoint1() const {
-        return point1;
-    }
-
-    void setPoint2(double y) {
-        point2 = y;
-    }
-
-    double getPoint2() const {
-        return point2;
-    }
-
     friend istream& operator>>(istream& in, Shape& s) {
         cout << "Enter point1: ";
         in >> s.point1;
@@ -46,12 +30,8 @@ public:
 class Line : public Shape {
 public:
     void draw() override {
-        int gd, gm = DETECT;
-        initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
         setcolor(14);
         line(static_cast<int>(point1), static_cast<int>(point2), static_cast<int>(point1) + 50, static_cast<int>(point2));
-        delay(5000);
-        closegraph();
     }
 };
 
@@ -68,61 +48,64 @@ public:
     }
 
     void draw() override {
-        int gd, gm = DETECT;
-        initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
         setcolor(14);
         circle(static_cast<int>(point1), static_cast<int>(point2), static_cast<int>(radius));
-        delay(5000);
-        closegraph();
     }
 };
 
 class Rectangle1 : public Shape {
 public:
     void draw() override {
-        int gd, gm = DETECT;
-        initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
         setcolor(14);
         rectangle(static_cast<int>(point1), static_cast<int>(point2),
                   static_cast<int>(point1) + 50, static_cast<int>(point2) + 30);
-        delay(5000);
-        closegraph();
     }
 };
 
 int main() {
-    char choice;
-    cout << "Enter 'L' for Line, 'C' for Circle, 'R' for Rectangle: ";
-    cin >> choice;
+    int gd, gm = DETECT;
+    initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
 
+    char choice;
     Shape* shape;
 
-    switch (choice) {
-        case 'L':
-            shape = new Line;
-            break;
-        case 'C':
-            shape = new Circle;
-            double radius;
-            cout << "Enter radius for the circle: ";
-            cin >> radius;
-            static_cast<Circle*>(shape)->setRadius(radius);
-            break;
-        case 'R':
-            shape = new Rectangle1;
-            break;
-        default:
-            cerr << "Invalid choice" << endl;
-            return 1;
-    }
+    do {
+        cout << "Enter 'L' for Line, 'C' for Circle, 'R' for Rectangle, or 'Q' to quit: ";
+        cin >> choice;
 
-    cout << "Enter information for the shape:" << endl;
-    cin >> *shape;
+        switch (choice) {
+            case 'L':
+                shape = new Line;
+                break;
+            case 'C':
+                shape = new Circle;
+                double radius;
+                cout << "Enter radius for the circle: ";
+                cin >> radius;
+                static_cast<Circle*>(shape)->setRadius(radius);
+                break;
+            case 'R':
+                shape = new Rectangle1;
+                break;
+           // case 'Q':
+              //  break; // Quit the loop
+            default:
+                cerr << "Invalid choice" << endl;
+                continue; // Ask for input again
+        }
 
-    cout << endl << "Drawing shape:" << endl;
-    shape->draw();
+        cout << "Enter information for the shape:" << endl;
+        cin >> *shape;
 
-    delete shape;
+        cout << endl << "Drawing shape:" << endl;
+        shape->draw();
+
+        delete shape;
+    } while (choice != 'Q');
+
+    // Close the graphics window at the end of the program
+    delay(5000); // Delay to keep the window open for 5 seconds (adjust as needed)
+    closegraph();
 
     return 0;
 }
